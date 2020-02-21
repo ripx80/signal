@@ -2,15 +2,13 @@ package main
 
 import (
 	"fmt"
-	"os"
-	"strconv"
+	"time"
 
 	"github.com/ripx80/gpio"
 )
 
 /*
 transmit sends a on and off signal. Change the codes
-GOARM=6 GOARCH=arm GOOS=linux go build -o transmit main.go
 */
 
 type transmitOptions struct {
@@ -29,19 +27,6 @@ func pb(code uint64, len int) {
 
 func main() {
 
-	if len(os.Args) < 2 {
-		fmt.Printf("usage: %s <code>\n", os.Args[0])
-		return
-	}
-	var code uint64
-	i, err := strconv.Atoi(os.Args[1])
-
-	if err != nil {
-		fmt.Println(err.Error())
-		return
-	}
-	code = uint64(i)
-
 	options := &transmitOptions{
 		PulseLength: 330,
 		GpioPin:     gpio.DefaultTransmitPin,
@@ -49,11 +34,24 @@ func main() {
 		BitLength:   gpio.DefaultBitLength,
 	}
 
-	pb(code, 24)
+	var on, off uint64
+	on = 0b000000000001010100010101  //on 5397
+	off = 0b000000000001010100010100 // off 5396
+
+	pb(on, 24)
 
 	t := gpio.NewTransmitter(options.GpioPin)
 
-	err = t.Transmit(code, options.Protocol, options.PulseLength, options.BitLength)
+	err := t.Transmit(on, options.Protocol, options.PulseLength, options.BitLength)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	t.Wait()
+	time.Sleep(2 * time.Second)
+
+	pb(off, 24)
+	err = t.Transmit(off, options.Protocol, options.PulseLength, options.BitLength)
 	if err != nil {
 		fmt.Println(err)
 		return
