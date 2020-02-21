@@ -1,4 +1,4 @@
-package gpio
+package signal
 
 // HighLow type definition
 type HighLow struct {

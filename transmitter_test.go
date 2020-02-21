@@ -1,11 +1,11 @@
-package gpio_test
+package signal_test
 
 import (
 	"bytes"
 	"errors"
 	"testing"
 
-	"github.com/ripx80/gpio"
+	"github.com/ripx80/signal"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -34,10 +34,10 @@ func (p *testPin) Close() {
 }
 
 func TestTransmitterTransmit(t *testing.T) {
-	gpio.TransmitRetries = 1
+	signal.TransmitRetries = 1
 	pin := newTestPin()
 
-	transmitter := gpio.NewNativeTransmitter(pin)
+	transmitter := signal.NewNativeTransmitter(pin)
 	defer transmitter.Close()
 
 	err := transmitter.Transmit(0x1, 1, 190, 24)
@@ -52,7 +52,7 @@ func TestTransmitterTransmit(t *testing.T) {
 func TestTransmitInvalidProtocol(t *testing.T) {
 	pin := newTestPin()
 
-	transmitter := gpio.NewNativeTransmitter(pin)
+	transmitter := signal.NewNativeTransmitter(pin)
 	defer transmitter.Close()
 
 	err := transmitter.Transmit(0x1, 999, 190, 24)
@@ -65,14 +65,14 @@ func TestTransmitInvalidProtocol(t *testing.T) {
 func TestTransmitterClose(t *testing.T) {
 	pin := newTestPin()
 
-	transmitter := gpio.NewNativeTransmitter(pin)
+	transmitter := signal.NewNativeTransmitter(pin)
 	assert.Nil(t, transmitter.Close())
 
 	assert.True(t, pin.closed)
 }
 
 func TestNullTransmitInvalidProtocol(t *testing.T) {
-	transmitter := gpio.NewNullTransmitter()
+	transmitter := signal.NewNullTransmitter()
 	defer transmitter.Close()
 
 	err := transmitter.Transmit(0x1, 999, 190, 24)

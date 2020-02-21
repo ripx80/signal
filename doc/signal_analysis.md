@@ -21,7 +21,7 @@ retries: 10
 Pulse coding: Short pulse length 127 - Long pulse length 301
 signal_start = 39017331, signal_end = 39198728, signal_len = 181397, pulses_found = 330
 
-## GO gpio
+## GO signal
 
 original signal: {25} 15 15 41 00 : 00010101 00010101 01000001 0
 retries: 10
@@ -34,7 +34,7 @@ Pulse coding: Short pulse length 78 - Long pulse length 174
 decode  00000000 00010101 00010101 01010001 0
         00000000 00010101 00010101 01000001 0
 
-gpio  0000000000010101 00010101 01000001
+signal  0000000000010101 00010101 01000001
 decode        10010101 00010101 01000001 0
 
 ## From Go

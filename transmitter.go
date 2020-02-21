@@ -1,4 +1,4 @@
-package gpio
+package signal
 
 import (
 	"fmt"
@@ -55,7 +55,7 @@ type Pin interface {
 
 // NativeTransmitter type definition.
 type NativeTransmitter struct {
-	gpioPin      Pin
+	gpioPin    Pin
 	transmission chan transmission
 	transmitted  chan bool
 	done         chan bool
@@ -64,7 +64,7 @@ type NativeTransmitter struct {
 // NewNativeTransmitter create a native transmitter on the gpio pin.
 func NewNativeTransmitter(gpioPin Pin) *NativeTransmitter {
 	t := &NativeTransmitter{
-		gpioPin:      gpioPin,
+		gpioPin:    gpioPin,
 		transmission: make(chan transmission, defaultTransmissionChanLen),
 		transmitted:  make(chan bool, defaultTransmissionChanLen),
 		done:         make(chan bool, 1),

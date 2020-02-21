@@ -1,4 +1,4 @@
-package gpio
+package signal
 
 import (
 	"time"
@@ -36,7 +36,7 @@ type Watcher interface {
 
 // NativeReceiver type definition
 type NativeReceiver struct {
-	gpioPin     uint
+	gpioPin   uint
 	lastEvent   int64
 	changeCount uint
 	repeatCount uint
@@ -51,9 +51,9 @@ type NativeReceiver struct {
 func NewNativeReceiver(gpioPin uint, watcher Watcher) *NativeReceiver {
 	r := &NativeReceiver{
 		gpioPin: gpioPin,
-		watcher: watcher,
-		done:    make(chan bool, 1),
-		result:  make(chan ReceiveResult, receiveResultChanLen),
+		watcher:   watcher,
+		done:      make(chan bool, 1),
+		result:    make(chan ReceiveResult, receiveResultChanLen),
 	}
 
 	r.watcher.AddPin(r.gpioPin)

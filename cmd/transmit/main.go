@@ -5,7 +5,7 @@ import (
 	"os"
 	"strconv"
 
-	"github.com/ripx80/gpio"
+	"github.com/ripx80/signal"
 )
 
 /*
@@ -15,7 +15,7 @@ GOARM=6 GOARCH=arm GOOS=linux go build -o transmit main.go
 
 type transmitOptions struct {
 	PulseLength uint
-	GpioPin     uint
+	signalPin   uint
 	Protocol    int
 	BitLength   int
 }
@@ -44,14 +44,14 @@ func main() {
 
 	options := &transmitOptions{
 		PulseLength: 330,
-		GpioPin:     gpio.DefaultTransmitPin,
-		Protocol:    gpio.DefaultProtocol,
-		BitLength:   gpio.DefaultBitLength,
+		gpioPin:     signal.DefaultTransmitPin,
+		Protocol:    signal.DefaultProtocol,
+		BitLength:   signal.DefaultBitLength,
 	}
 
 	pb(code, 24)
 
-	t := gpio.NewTransmitter(options.GpioPin)
+	t := signal.NewTransmitter(options.gpio.Pin)
 
 	err = t.Transmit(code, options.Protocol, options.PulseLength, options.BitLength)
 	if err != nil {

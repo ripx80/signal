@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/ripx80/gpio"
+	"github.com/ripx80/signal"
 )
 
 /*
@@ -13,7 +13,7 @@ transmit sends a on and off signal. Change the codes
 
 type transmitOptions struct {
 	PulseLength uint
-	GpioPin     uint
+	gpioPin     uint
 	Protocol    int
 	BitLength   int
 }
@@ -29,9 +29,9 @@ func main() {
 
 	options := &transmitOptions{
 		PulseLength: 330,
-		GpioPin:     gpio.DefaultTransmitPin,
-		Protocol:    gpio.DefaultProtocol,
-		BitLength:   gpio.DefaultBitLength,
+		gpioPin:     signal.DefaultTransmitPin,
+		Protocol:    signal.DefaultProtocol,
+		BitLength:   signal.DefaultBitLength,
 	}
 
 	var on, off uint64
@@ -40,7 +40,7 @@ func main() {
 
 	pb(on, 24)
 
-	t := gpio.NewTransmitter(options.GpioPin)
+	t := gpio.NewTransmitter(options.gpioPin)
 
 	err := t.Transmit(on, options.Protocol, options.PulseLength, options.BitLength)
 	if err != nil {

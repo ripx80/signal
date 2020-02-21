@@ -3,20 +3,19 @@ package main
 import (
 	"fmt"
 	"os"
-	"os/signal"
 
-	"github.com/ripx80/gpio"
+	"github.com/ripx80/signal"
 )
 
 type SniffOptions struct {
-	GpioPin uint
+	gpioPin uint
 }
 
 func (o *SniffOptions) Run() {
 	interrupt := make(chan os.Signal, 1)
 	signal.Notify(interrupt, os.Interrupt)
 
-	receiver := gpio.NewReceiver(o.GpioPin)
+	receiver := signal.NewReceiver(o.gpioPin)
 	defer receiver.Close()
 
 	for {
@@ -33,7 +32,7 @@ func (o *SniffOptions) Run() {
 
 func main() {
 	options := &SniffOptions{
-		GpioPin: 17,
+		gpioPin: 17,
 	}
 	options.Run()
 }

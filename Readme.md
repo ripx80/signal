@@ -1,6 +1,6 @@
-# GPIO
+# signal
 
-Its a gpio lib for signal sending over 433. Implementing to decode signals for Intertechno ITL 3500.
+Its a signal lib for signal sending over 433. Implementing to decode signals for Intertechno ITL 3500.
 If you are lazy look at the code list.
 
 ## Building for ARM

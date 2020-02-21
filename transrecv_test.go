@@ -1,12 +1,12 @@
 // +build flaky
 
-package gpio_test
+package signal_test
 
 import (
 	"testing"
 	"time"
 
-	"github.com/ripx80/gpio"
+	"github.com/ripx80/signal"
 	"github.com/stretchr/testify/assert"
 )
 
